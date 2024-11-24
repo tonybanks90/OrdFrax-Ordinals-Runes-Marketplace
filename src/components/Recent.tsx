@@ -4,8 +4,11 @@ import OrdinalsCard from "./OrdinalsCard";
 
 const Recent: React.FC = () => {
   const ordinalsData = Array.from({ length: 8 }).map((_, index) => ({
+    id: (index + 1).toString(), // Convert ID to a string
     image: `https://via.placeholder.com/150?text=Ordinal+${index + 1}`, // Placeholder image with dynamic text
     status: "Unconfirmed", // Static status for now
+    description: `Ordinal Description ${index + 1}`, // Example description
+    transactionUrl: `https://example.com/transaction/${index + 1}`, // Example transaction URL
   }));
 
   return (
@@ -25,11 +28,14 @@ const Recent: React.FC = () => {
 
       {/* Ordinal Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {ordinalsData.map((ordinal, index) => (
-          <OrdinalsCard 
-            key={index} 
-            image={ordinal.image} 
-            status={ordinal.status} 
+        {ordinalsData.map((ordinal) => (
+          <OrdinalsCard
+            key={ordinal.id}
+            id={ordinal.id}
+            image={ordinal.image}
+            status={ordinal.status}
+            description={ordinal.description}
+            transactionUrl={ordinal.transactionUrl}
           />
         ))}
       </div>

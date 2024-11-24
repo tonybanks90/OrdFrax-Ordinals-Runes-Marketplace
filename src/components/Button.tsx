@@ -1,17 +1,34 @@
 import React from "react";
 
 interface ButtonProps {
-  label: string;
-  onClick?: () => void;
+  label: string; // The text displayed on the button
+  onClick?: () => void; // Optional click handler
+  color?: string; // Background color of the button
+  textColor?: string; // Text color of the button
+  className?: string; // Additional styles for the button
+  containerClass?: string; // Styling for the button's outer container
 }
 
-export const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
+export const Button: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  color = "#F7931A", // Default color
+  textColor = "#FFFFFF", // Default text color
+  className = "",
+  containerClass = "",
+}) => {
   return (
-    <button
-      className="bg-[#F7931A] text-white font-semibold py-1 px-4 rounded-lg hover:bg-orange-600 transition-colors"
-      onClick={onClick}
-    >
-      {label}
-    </button>
+    <div className={containerClass}>
+      <button
+        onClick={onClick}
+        className={`py-2 px-4 rounded-lg font-semibold hover:bg-opacity-80 transition-all ${className}`}
+        style={{
+          backgroundColor: color,
+          color: textColor,
+        }}
+      >
+        {label}
+      </button>
+    </div>
   );
 };
