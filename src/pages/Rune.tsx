@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header"; // Import the Header component
 import RuneDetailPage from "../components/RuneDetailPage"; // Import the RuneDetailPage component
 import BentoBox from "../components/OrderRunes"; // Import the BentoBox component
+import Footer from "../components/Footer"; // Import the Footer component
 
 const Rune: React.FC = () => {
   return (
@@ -21,6 +22,9 @@ const Rune: React.FC = () => {
           <BentoBox />
         </div>
       </div>
+
+      {/* Footer at the bottom */}
+      <Footer />
     </div>
   );
 };

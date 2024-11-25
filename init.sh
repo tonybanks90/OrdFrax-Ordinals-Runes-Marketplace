@@ -16,3 +16,5 @@ fi
 
 # Start the ord service. It'll be available at localhost:8080
 docker compose up ord -d
+
+#OrdFrax
