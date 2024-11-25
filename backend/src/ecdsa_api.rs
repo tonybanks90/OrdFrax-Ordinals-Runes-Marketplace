@@ -1,4 +1,4 @@
-.use crate::types::*;
+use crate::types::*;
 use candid::Principal;
 use ic_cdk::{api::call::call_with_payment, call};
 
