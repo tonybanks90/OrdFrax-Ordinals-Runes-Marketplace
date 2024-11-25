@@ -1,116 +1,124 @@
-OrdFrax - Ordinals & Runes Marketplace
-OrdFrax is a decentralized marketplace that simplifies the minting, listing, and trading of Ordinals and Runes inscriptions. Built on the Internet Computer Protocol (ICP) as a Bitcoin L2, OrdFrax utilizes innovative onchain capabilities, such as Threshold Schnorr Signatures, for seamless integration with the Bitcoin blockchain.
+# Ordinals Inscription Canister
 
-This project explores creating and managing Bitcoin Ordinals and Runes inscriptions using Pay-to-Taproot (P2TR) outputs. Threshold Schnorr signatures, available on the ICP mainnet since the Deuterium Milestone, are a key enabler for this functionality. For further details, refer to the Internet Computer documentation.
+This example project explores the possibility of inscribing ordinal inscriptions onto the Bitcoin blockchain using the Internet Computer Protocol (ICP).
 
-Quick Start
-Before starting, ensure the following are installed on your system:
+Inscriptions are made by spending a Pay-to-Taproot (P2TR) output, which necessitates the use of Schnorr signatures. Threshold Schnorr signatures have been available on ICP mainnet since the [Deuterium Milestone](https://x.com/dfinity/status/1823341406254985448). You can read more about threshold Schnorr signatures in the [Internet Computer documentation](https://internetcomputer.org/docs/current/developer-docs/smart-contracts/signatures/signing-messages-t-schnorr).
 
-Node.js >= 16.x
-dfx >= 0.22.x
-Rust
-Docker (including Docker Compose)
-⚠️ Note: Only dfx >= 0.22.x supports Threshold Schnorr Signatures. Ensure you have the correct version installed.
+This project has only been tested on the local development environment on a Mac with Apple Silicon. It may not work on other platforms. Please file an issue if you encounter any problems.
 
-1. System Configuration
-After installing Rust, configure your environment for Internet Computer development:
+## Quick Start
 
-sh
-Copy code
-rustup target add wasm32-unknown-unknown
-cargo install cargo-watch # Optional: Live reload for development
-2. Initialize Services
-Make sure Docker is running, then initialize the Bitcoin and Ordinals services:
+Make sure that [Node.js](https://nodejs.org/en/) >= 16.x, [dfx](https://internetcomputer.org/docs/current/developer-docs/build/install-upgrade-remove) >= 0.22.x, [Rust](https://www.rust-lang.org/tools/install), and [Docker](https://docs.docker.com/get-docker/) (including docker compose) are installed on your system.
+
+> :warning: Only dfx >= 0.22.x supports threshold Schnorr signatures. Make sure you have the correct version installed.
+
+After installing Rust, run these commands to configure your system for IC canister development:
 
 sh
-Copy code
+rustup target add wasm32-unknown-unknown # Required for building IC canisters
+cargo install cargo-watch # Optional; used for live reloading in `npm start`
+
+
+Next, make sure Docker is running, and then run the following commands to start Bitcoin and Ord:
+
+sh
 ./init.sh
-For Apple Silicon users, enable platform emulation:
+
+
+If you are on Apple silicon, you need to use platform emulation:
 
 sh
-Copy code
-DOCKER_DEFAULT_PLATFORM=linux/amd64 ./init.sh
-3. Start the Local Environment
-Start a clean local dfx replica in a new terminal:
+ DOCKER_DEFAULT_PLATFORM=linux/amd64 ./init.sh
+
+
+Start the local dfx replica in a new terminal with:
 
 sh
-Copy code
 dfx start --clean
-Launch a proxy to connect the frontend to the local Bitcoin RPC server:
+
+
+Then, start a proxy to be able to connect from the frontend to the local Bitcoin RPC server:
 
 sh
-Copy code
 npm install
 npm run proxy
-Deploy the canisters:
+
+
+and build and deploy the canisters:
 
 sh
-Copy code
 ./deploy.sh
-Upon successful deployment, you will see URLs for the deployed frontend and backend canisters:
 
-bash
-Copy code
+
+Finally, you should see the following:
+
 Deployed canisters.
 URLs:
-  Frontend canister:
-    http://be2us-64aaa-aaaaa-qaabq-cai.localhost:4943/
-  Backend canisters:
+  Frontend canister via browser
+    frontend: http://be2us-64aaa-aaaaa-qaabq-cai.localhost:4943/
+  Backend canister via Candid interface:
     backend: http://bnz7o-iuaaa-aaaaa-qaaaa-cai.localhost:4943/?id=bd3sg-teaaa-aaaaa-qaaba-cai
     schnorr_canister: http://bnz7o-iuaaa-aaaaa-qaaaa-cai.localhost:4943/?id=6fwhw-fyaaa-aaaap-qb7ua-cai
-Visit the frontend in your browser using the provided URL.
 
-4. Local Development Frontend (Optional)
-Run the local frontend with hot reload, accessible at http://localhost:3000:
+
+You can open the frontend in your browser by visiting the URL provided.
+
+The ord server is running at [http://localhost:8080](http://localhost:8080). You can see your inscriptions at http://localhost:8080/inscriptions.
+
+Optionally, you can start a local development frontend with hot reload accessible at [http://localhost:3000](http://localhost:3000) by running:
 
 sh
-Copy code
 npm run frontend
-Deployment Process
-Stopping the Service
-To stop all services:
+
+
+### Stopping the service
 
 sh
-Copy code
 docker compose down
 dfx stop
-Manually stop the proxy and frontend processes. To remove container data, run:
+
+
+Stop the proxy and frontend processes manually.
+If you want to remove the data from the bitcoind and ord containers, you can run docker compose down -v.
+
+## Architecture 
+
+![Architecture](/docs/inscriptions_architecture.svg)
+
+### User Guide
+
+![Frontend](/docs/frontend.png)
+
+
+## How it works
+
+Ordinal inscriptions are created by spending a Pay-to-Taproot (P2TR) output. Therefore, we have to create two Bitcoin transactions. The first transaction, the commit transaction, spends one or more (P2PKH) outputs controlled by the inscription canister via ECDSA signatures and creates a P2TR output that commits to a reveal script containing the ordinal inscription. The second transaction, the reveal transaction, spends the P2TR output and reveals the ordinal inscription by providing the reveal script and a Schnorr signature. The transaction creates a new output associated with the destination address, which effectively owns the ordinal inscription.
+
+![Transactions](/docs/transactions.svg)
+
+## Troubleshooting
+
+If you inscribe an ordinal but it doesn't appear on the ord server, you should check if there are issues with the Bitcoin transaction.
+
+Use the log in the dfx terminal to find the raw transaction data of the reveal transaction:
+
+
+and then use the testmempoolaccept command to check if there's an issue with the transaction:
+
+Signed reveal transaction: 0200000000010123b1137d57b67468459cbae415fc38a6974d1935dfdd27a88659e16404e58c5a0000000000fdffffff015cd5f505000000001976a9141a5394ad123ff2043e5e8694e85ca30f78e46fe488ac0340e1a04ddf26dfd806a846ff1db503b7f6cd1c440d65a0b9cdd4764e427d2d1bdf1414634094985ccaf10ea42f0e3898a106d128d6a1664a92aa4ae430e53fbde8510063036f7264010118746578742f706c61696e3b636861727365743d7574662d38000b48656c6c6f20576f726c646820ce0e80cd855ebd3858556334bbee1a6ff9d0e5cb8236f30599d675f02ed45886ac21c1ce0e80cd855ebd3858556334bbee1a6ff9d0e5cb8236f30599d675f02ed4588600000000
+
+
 
 sh
-Copy code
-docker compose down -v
-Architecture
-OrdFrax leverages the power of Bitcoin and ICP to bridge onchain marketplaces with decentralized technologies.
+docker compose exec bitcoind bitcoin-cli testmempoolaccept '["0200000000010123b1137d57b67468459cbae415fc38a6974d1935dfdd27a88659e16404e58c5a0000000000fdffffff015cd5f505000000001976a9141a5394ad123ff2043e5e8694e85ca30f78e46fe488ac0340e1a04ddf26dfd806a846ff1db503b7f6cd1c440d65a0b9cdd4764e427d2d1bdf1414634094985ccaf10ea42f0e3898a106d128d6a1664a92aa4ae430e53fbde8510063036f7264010118746578742f706c61696e3b636861727365743d7574662d38000b48656c6c6f20576f726c646820ce0e80cd855ebd3858556334bbee1a6ff9d0e5cb8236f30599d675f02ed45886ac21c1ce0e80cd855ebd3858556334bbee1a6ff9d0e5cb8236f30599d675f02ed4588600000000"]'
 
 
+## Credits
 
-How It Works
-Ordinals and Runes inscriptions are created by spending Pay-to-Taproot (P2TR) outputs. Here’s an overview:
+The code in this repository is based on the following projects:
 
-Commit Transaction:
-A Bitcoin transaction creates a P2TR output that commits to a reveal script containing the inscription. This transaction is signed using ECDSA by the inscription canister.
+- [DFINITY Basic Bitcoin sample project](https://github.com/dfinity/examples/tree/master/rust/basic_bitcoin).
+- [Ord](https://github.com/ordinals/ord).# Ordinals-Runes-Marketplace
 
-Reveal Transaction:
-The P2TR output is spent, revealing the inscription via a Schnorr signature and the reveal script. A new output is created, associating the Ordinal or Rune with the destination address.
-
-
-
-Features
-Decentralized Minting: Seamlessly create Bitcoin inscriptions.
-Marketplace Integration: List and trade inscriptions in a decentralized environment.
-Bitcoin L2 Scalability: Built on the Internet Computer, leveraging speed and cost-efficiency.
-Troubleshooting
-If you inscribe an Ordinal or Rune but it doesn’t appear on the ord server, check the Bitcoin transaction logs in the dfx terminal.
-
-To debug:
-
-Extract the raw transaction data from the logs.
-Use the testmempoolaccept command to verify the transaction:
-sh
-Copy code
-docker compose exec bitcoind bitcoin-cli testmempoolaccept '["<raw_transaction_hex>"]'
-Credits
-This project draws inspiration from:
-
-DFINITY Basic Bitcoin sample project
-Ord
+Make it personalized for OrdFrax, remove ererevant add new importants
+keep deployment process
