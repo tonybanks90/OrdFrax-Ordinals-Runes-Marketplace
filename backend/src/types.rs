@@ -1,6 +1,6 @@
 use candid::{CandidType, Deserialize, Principal};
 use serde::Serialize;
-
+.
 #[derive(CandidType, Deserialize)]
 pub struct SendRequest {
     pub destination_address: String,
