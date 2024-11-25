@@ -1,4 +1,4 @@
-.use crate::{bitcoin_api, ecdsa_api, inscription::Inscription, schnorr_api, KEY_NAME};
+use crate::{bitcoin_api, ecdsa_api, inscription::Inscription, schnorr_api, KEY_NAME};
 use bitcoin::{
     absolute::LockTime,
     blockdata::{opcodes, script::Builder, witness::Witness},
