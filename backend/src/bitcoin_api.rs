@@ -1,4 +1,4 @@
-use candid::Principal;
+.use candid::Principal;
 use ic_cdk::api::call::call_with_payment;
 use ic_cdk::api::management_canister::bitcoin::{
     BitcoinNetwork, GetBalanceRequest, GetUtxosRequest,
