@@ -38,4 +38,4 @@ volumes:
 networks:
   bitcoin_network:
 
-  .
+  
