@@ -4,6 +4,3 @@ members = [
 ]
 resolver = "2"
 
-
-[dependencies]
-backend = { path = "backend" }

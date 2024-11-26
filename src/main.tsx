@@ -13,6 +13,8 @@ import CollectionPage from "./pages/CollectionPage";
 import OrdinalDetailPage from "./components/OrdinalDetailPage"; // Import the OrdinalDetailPage
 import RuneDetailPage from "./components/RuneDetailPage";
 import Rune from "./pages/Rune";
+import File from "./components/File";
+import Text from "./components/Text";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,20 @@ const router = createBrowserRouter([
   {
     path: "/inscribe",
     element: <InscribePage />,
+    children: [
+      {
+        index: true, // Default route for /inscribe
+        element: <File />, // File will be displayed by default
+      },
+      {
+        path: "file",
+        element: <File />,
+      },
+      {
+        path: "text",
+        element: <Text />,
+      },
+    ],
   },
   {
     path: "/marketplace/runeshop/:name", // Define dynamic route for rune details
@@ -45,6 +61,10 @@ const router = createBrowserRouter([
     path: "/marketplace",
     element: <Marketplace />,
     children: [
+      {
+        index: true, // This will render Runeshop by default when accessing /marketplace
+        element: <Runeshop />,
+      },
       {
         path: "runeshop",
         element: <Runeshop />,

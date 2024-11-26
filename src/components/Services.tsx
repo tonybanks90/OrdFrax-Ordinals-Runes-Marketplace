@@ -3,7 +3,7 @@ import { Button } from "./Button";
 
 const Services: React.FC = () => {
   return (
-    <section className="bg-gray-100 py-16 px-6 text-center">
+    <section className=" bg-gray-100 py-16 px-6 text-center">
       <h2 className="text-3xl font-bold mb-6 text-[#F7931A]">Explore Our Services</h2>
       <p className="text-lg text-gray-700 mb-10">
         Discover the power of Ordinals on Bitcoin. From inscription minting to a vibrant marketplace, 

@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { inscriptionData } from "../data/inscriptionData";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const OrdinalDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,8 +14,8 @@ const OrdinalDetailPage: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Header />
-      <main className="pt-24 px-6">
+      
+      <main className="pt-[8rem]  px-6">
         {/* Ordinal Detail */}
         <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">{`Ordinal ${ordinal.id}`}</h1>
@@ -35,6 +36,8 @@ const OrdinalDetailPage: React.FC = () => {
           </div>
         </div>
       </main>
+      <Footer />
+      
     </div>
   );
 };
