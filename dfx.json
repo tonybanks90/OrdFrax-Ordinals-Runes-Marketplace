@@ -28,6 +28,6 @@
       }
     }
   },
-  "output_env_file": ".",
+  "output_env_file": ".env",
   "version": 1
 }
