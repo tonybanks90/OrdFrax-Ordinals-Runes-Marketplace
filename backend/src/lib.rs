@@ -74,3 +74,4 @@ pub async fn get_p2pkh_address() -> String {
 }
 
 ic_cdk::export_candid!();
+//OrdFrax

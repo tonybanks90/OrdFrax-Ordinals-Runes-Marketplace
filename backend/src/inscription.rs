@@ -1,6 +1,6 @@
 // Taken from https://github.com/ordinals/ord/blob/master/src/inscriptions/inscription.rs and
 // https://github.com/ordinals/ord/blob/master/src/inscriptions/tag.rs
- 
+ //OrdFrax
 use bitcoin::blockdata::{
     opcodes,
     script::{self, PushBytesBuf},

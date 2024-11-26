@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+#OrdFrax
 # Build the backend canister
 cargo build --release --target wasm32-unknown-unknown --package backend
 candid-extractor target/wasm32-unknown-unknown/release/backend.wasm > backend/backend.did
