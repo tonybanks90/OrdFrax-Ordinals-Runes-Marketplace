@@ -12,7 +12,7 @@ const AboutPage: React.FC = () => {
       
       <Services />
       <OrdinalsGallery />
-      <Recent />
+     
       
       <Footer />
     </>
