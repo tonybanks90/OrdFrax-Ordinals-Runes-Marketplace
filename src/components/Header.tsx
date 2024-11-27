@@ -1,16 +1,16 @@
 import React from "react";
-import { FiHome, FiEdit, FiShoppingCart } from "react-icons/fi";
+import { NavLink } from "react-router-dom"; // Use NavLink for active state styling
+import { FiHome, FiEdit, FiShoppingCart, FiTrendingUp } from "react-icons/fi"; // Added Dex icon
 import { Button } from "./Button"; // Reusable button component
-import { Link } from "react-router-dom"; // Navigation using React Router
 
 const Header: React.FC = () => {
   return (
-    <header className="fixed top-0 w-full bg-yellow-500/80 backdrop-blur-md z-50 shadow-md">
+    <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 shadow-md">
       {/* Upper Section */}
       <div className="flex justify-between items-center px-4 py-2">
         {/* Logo */}
         <div className="text-[#F7931A] font-zentry text-2xl font-bold tracking-wide">
-        <b>ORDFRAX</b>
+          <b>ORDFRAX</b>
         </div>
 
         {/* Network Selector */}
@@ -38,15 +38,26 @@ const Header: React.FC = () => {
           { to: "/", icon: FiHome, label: "Home" },
           { to: "/inscribe", icon: FiEdit, label: "Inscribe" },
           { to: "/marketplace", icon: FiShoppingCart, label: "Marketplace" },
+          {
+            to: "/dex",
+            icon: FiTrendingUp,
+            label: "Dex",
+            onClick: () => alert("Coming soon!"), // Display message when Dex is clicked
+          },
         ].map((item) => (
-          <Link
+          <NavLink
             key={item.to}
             to={item.to}
-            className="flex flex-col items-center group transition"
+            onClick={item.onClick} // Handle custom click for Dex
+            className={({ isActive }) =>
+              `flex flex-col items-center group transition ${
+                isActive ? "font-bold underline" : "opacity-80"
+              }`
+            }
           >
             <item.icon className="text-xl group-hover:scale-110 transition-transform" />
             <span className="text-xs group-hover:underline">{item.label}</span>
-          </Link>
+          </NavLink>
         ))}
       </nav>
     </header>
