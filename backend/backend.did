@@ -4,4 +4,3 @@ service : (BitcoinNetwork) -> {
   get_p2pkh_address : () -> (text);
   inscribe : (text, text, opt text, opt nat64) -> (text, text);
 }
-
