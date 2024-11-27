@@ -1,73 +1,22 @@
-import React, { useState } from "react";
-import Mint from "../components/Mint"; // Mint component
-import EtchMint from "../components/EtchMint"; // Etch|Mint component
+import React from "react";
+import Mint from "../components/Mint";
+import EtchMint from "../components/EtchMint";
 
-const InscribRune: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"mint" | "etchMint">("mint");
-  const [inputMode, setInputMode] = useState<"file" | "text">("file");
 
+const InscribeRune: React.FC = () => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">Inscribe Runes</h1>
-
-      {/* Input Mode Buttons */}
-      <div className="flex justify-center gap-4 mb-6">
-        <button
-          className={`px-6 py-2 font-semibold text-sm rounded-lg ${
-            inputMode === "file"
-              ? "bg-[#F7931A] text-white"
-              : "bg-gray-100 text-gray-600"
-          }`}
-          onClick={() => setInputMode("file")}
-        >
-          File
-        </button>
-        <button
-          className={`px-6 py-2 font-semibold text-sm rounded-lg ${
-            inputMode === "text"
-              ? "bg-[#F7931A] text-white"
-              : "bg-gray-100 text-gray-600"
-          }`}
-          onClick={() => setInputMode("text")}
-        >
-          Text
-        </button>
+    <div className="flex flex-col lg:flex-row gap-6 p-6 bg-gray-50 text-gray-800 min-h-screen">
+      {/* Mint Component - 60% */}
+      <div className="flex-grow lg:w-3/5 bg-white shadow-md rounded-lg p-6">
+        <Mint />
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex justify-center gap-4 mb-6">
-        <button
-          className={`px-6 py-2 font-semibold text-sm rounded-lg ${
-            activeTab === "mint"
-              ? "bg-[#F7931A] text-white"
-              : "bg-gray-100 text-gray-600"
-          }`}
-          onClick={() => setActiveTab("mint")}
-        >
-          Mint
-        </button>
-        <button
-          className={`px-6 py-2 font-semibold text-sm rounded-lg ${
-            activeTab === "etchMint"
-              ? "bg-[#F7931A] text-white"
-              : "bg-gray-100 text-gray-600"
-          }`}
-          onClick={() => setActiveTab("etchMint")}
-        >
-          Etch | Mint
-        </button>
-      </div>
-
-      {/* Conditional Rendering */}
-      <div>
-        {activeTab === "mint" ? (
-          <Mint inputMode={inputMode} />
-        ) : (
-          <EtchMint inputMode={inputMode} />
-        )}
+      {/* EtchMint Component - 40% */}
+      <div className="lg:w-2/5 bg-white shadow-md rounded-lg p-6">
+        <EtchMint inputMode="text" />
       </div>
     </div>
   );
 };
 
-export default InscribRune;
+export default InscribeRune;
