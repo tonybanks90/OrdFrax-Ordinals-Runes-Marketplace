@@ -15,11 +15,17 @@ import RuneDetailPage from "./components/RuneDetailPage";
 import Rune from "./pages/Rune";
 import File from "./components/File";
 import Text from "./components/Text";
+import layout from "./components/Layout";
+import Layout from "./components/Layout";
 
 const router = createBrowserRouter([
   {
     path: "/about",
-    element: <HomePage />,
+    element: (
+    <Layout>
+      <HomePage />,
+    </Layout>
+    ),
   },
   {
     path: "/",

@@ -10,9 +10,8 @@ const OrdinalsGallery: React.FC = () => {
           key={item.id}
           id={item.id}
           image={item.imageUrl}
-          status={item.id}
+          status={item.status}
           description={item.description}
-          transactionUrl={item.transactionUrl}
         />
       ))}
     </div>
