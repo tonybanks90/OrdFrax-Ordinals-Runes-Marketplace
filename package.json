@@ -17,7 +17,7 @@
     "axios": "^1.6.7",
     "bitcoin-core": "^4.1.0",
     "bitcoin-core-ts": "^3.0.3",
-    "framer-motion": "^11.0.3",
+    "framer-motion": "^11.11.17",
     "inherits": "^2.0.4",
     "local-cors-proxy": "^1.1.0",
     "react": "^18.2.0",

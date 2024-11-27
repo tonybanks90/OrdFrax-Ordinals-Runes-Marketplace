@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom"; // For active state styling
 import { FiHome, FiEdit, FiShoppingCart, FiTrendingUp } from "react-icons/fi"; // Icons
 import { Button } from "./Button"; // Reusable button component
@@ -7,6 +7,33 @@ import WalletCard from "./WalletCard"; // Import the WalletCard modal
 const Header: React.FC = () => {
   const [isWalletCardOpen, setIsWalletCardOpen] = useState(false); // State to control the modal visibility
   const [walletAddress, setWalletAddress] = useState<string | null>(null); // Store the connected wallet address
+  const [isDarkMode, setIsDarkMode] = useState(false); // State for dark mode toggle
+
+  // Check the saved dark mode preference on initial load
+  useEffect(() => {
+    const savedMode = localStorage.getItem("darkMode");
+    if (savedMode) {
+      setIsDarkMode(savedMode === "true");
+    } else {
+      const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setIsDarkMode(prefersDarkMode);
+    }
+  }, []);
+
+  // Toggle dark mode and save preference to localStorage
+  const handleDarkModeToggle = () => {
+    setIsDarkMode(!isDarkMode);
+    localStorage.setItem("darkMode", (!isDarkMode).toString());
+  };
+
+  useEffect(() => {
+    // Apply dark mode class to the root element
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   const handleConnect = (address: string) => {
     setWalletAddress(address); // Set the wallet address once connected
@@ -34,6 +61,14 @@ const Header: React.FC = () => {
               <option value="mainnet">Bitcoin Mainnet</option>
             </select>
           </div>
+
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={handleDarkModeToggle}
+            className="bg-gray-300 dark:bg-gray-600 p-2 rounded-lg text-black dark:text-white"
+          >
+            {isDarkMode ? "Light Mode" : "Dark Mode"}
+          </button>
 
           {/* Connect Button */}
           <Button

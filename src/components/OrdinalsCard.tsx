@@ -6,6 +6,7 @@ interface OrdinalsCardProps {
   image: string;
   status: string;
   description: string;
+  transactionUrl: string;
 }
 
 const OrdinalsCard: React.FC<OrdinalsCardProps> = ({
@@ -13,6 +14,7 @@ const OrdinalsCard: React.FC<OrdinalsCardProps> = ({
   image,
   status,
   description,
+  transactionUrl,
 }) => {
   // Format ID to display first 4 and last 4 digits with ellipsis in the middle
   const formattedId = `${id.slice(0, 4)}...${id.slice(-4)}`;
