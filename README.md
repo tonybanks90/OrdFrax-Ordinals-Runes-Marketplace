@@ -1,4 +1,7 @@
 # OrdFrax - Ordinals & Runes Marketplace
+https://5join-zaaaa-aaaal-artba-cai.icp0.io/
+
+ https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io/?id=xprpq-miaaa-aaaal-ars2q-cai
 
 This example project demonstrates how **Ordinals** and **Runes** inscriptions can be minted, listed, and traded on the Bitcoin blockchain using the **Internet Computer Protocol (ICP)** as a Bitcoin Layer 2 solution. 
 
